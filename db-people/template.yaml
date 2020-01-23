@@ -1,0 +1,60 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+    db-people
+
+    Sample SAM Template for db-people
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+    Function:
+        Timeout: 20
+
+Resources:
+    PostPeopleFunction:
+        Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+        Properties:
+            CodeUri: postPeople/
+            Handler: app.lambdaHandler
+            Runtime: nodejs10.x
+            Events:
+                PostPeople:
+                    Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+                    Properties:
+                        Path: /post-people
+                        Method: post
+    GetPeopleFunction:
+        Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+        Properties:
+            CodeUri: getPeople/
+            Handler: app.lambdaHandler
+            Runtime: nodejs10.x
+            Events:
+                PostPeople:
+                    Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+                    Properties:
+                        Path: /get-people
+                        Method: get
+
+Outputs:
+    # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+    # Find out more about other implicit resources you can reference within SAM
+    # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+    PostPeopleApi:
+        Description: "API Gateway endpoint URL for Prod stage for Hello World function"
+        Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
+    PostPeopleFunction:
+        Description: "Hello World Lambda Function ARN"
+        Value: !GetAtt PostPeopleFunction.Arn
+    PostPeopleFunctionIamRole:
+        Description: "Implicit IAM Role created for Hello World function"
+        Value: !GetAtt PostPeopleFunctionRole.Arn
+    GetPeopleApi:
+        Description: "API Gateway endpoint URL for Prod stage for Hello World function"
+        Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
+    GetPeopleFunction:
+        Description: "Hello World Lambda Function ARN"
+        Value: !GetAtt GetPeopleFunction.Arn
+    GetPeopleFunctionIamRole:
+        Description: "Implicit IAM Role created for Hello World function"
+        Value: !GetAtt GetPeopleFunctionRole.Arn
