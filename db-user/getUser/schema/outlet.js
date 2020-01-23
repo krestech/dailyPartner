@@ -24,6 +24,6 @@ var outletSchema = mongoose.Schema(
     }
 );
 
-var Outlet = mongoose.model("Outlets", outletSchema);
+var Outlet = mongoose.model("Outlet", outletSchema);
 
 module.exports = Outlet;

@@ -1,7 +1,7 @@
 // const axios = require('axios')
 // const url = 'http://checkip.amazonaws.com/';
 const mongoose = require("mongoose");
-const People = require("./schema/people");
+const User = require("./schema/user");
 const bcrypt = require("bcrypt-nodejs");
 const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
@@ -44,23 +44,24 @@ mongoose.connection.on("error", function() {
 exports.lambdaHandler = (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
     try {
-        const people = new People();
+        const user = new User();
         let body = JSON.parse(event.body);
-        people.name = body.name;
-        people.email = body.email;
-        people.password = bcrypt.hashSync(body.password);
-        people.pin = bcrypt.hashSync(body.pin);
-        people.phone = body.phone;
-        people.role = body.role;
-        people.outlet = body.outlet;
+        user.name = body.name;
+        user.userName = body.userName;
+        user.email = body.email;
+        user.password = bcrypt.hashSync(body.password);
+        user.pin = bcrypt.hashSync(body.pin);
+        user.phone = body.phone;
+        user.role = body.role;
+        user.outlet = body.outlet;
 
-        people.save(function(err) {
+        user.save(function(err) {
             // console.log("eventttttt", body);
             // if (err)
             //     res.json(err);
             response = callback(null, {
                 statusCode: 200,
-                body: JSON.stringify(people),
+                body: JSON.stringify(user),
                 headers: {
                     "Content-Type": "application/json",
                     "Access-Control-Allow-Origin": "*",

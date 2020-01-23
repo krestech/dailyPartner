@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: >
-    db-people
+    db-user
 
     Sample SAM Template for db-people
 
@@ -11,50 +11,50 @@ Globals:
         Timeout: 20
 
 Resources:
-    PostPeopleFunction:
+    PostUserFunction:
         Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
         Properties:
-            CodeUri: postPeople/
+            CodeUri: postUser/
             Handler: app.lambdaHandler
             Runtime: nodejs10.x
             Events:
-                PostPeople:
+                PostUser:
                     Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
                     Properties:
-                        Path: /post-people
+                        Path: /user
                         Method: post
-    GetPeopleFunction:
+    GetUserFunction:
         Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
         Properties:
-            CodeUri: getPeople/
+            CodeUri: getUser/
             Handler: app.lambdaHandler
             Runtime: nodejs10.x
             Events:
-                PostPeople:
+                PostUser:
                     Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
                     Properties:
-                        Path: /get-people
+                        Path: /user
                         Method: get
 
 Outputs:
     # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
     # Find out more about other implicit resources you can reference within SAM
     # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
-    PostPeopleApi:
+    PostUserApi:
         Description: "API Gateway endpoint URL for Prod stage for Hello World function"
         Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
-    PostPeopleFunction:
+    PostUserFunction:
         Description: "Hello World Lambda Function ARN"
-        Value: !GetAtt PostPeopleFunction.Arn
-    PostPeopleFunctionIamRole:
+        Value: !GetAtt PostUserFunction.Arn
+    PostUserFunctionIamRole:
         Description: "Implicit IAM Role created for Hello World function"
-        Value: !GetAtt PostPeopleFunctionRole.Arn
-    GetPeopleApi:
+        Value: !GetAtt PostUserFunctionRole.Arn
+    GetUserApi:
         Description: "API Gateway endpoint URL for Prod stage for Hello World function"
         Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
-    GetPeopleFunction:
+    GetUserFunction:
         Description: "Hello World Lambda Function ARN"
-        Value: !GetAtt GetPeopleFunction.Arn
-    GetPeopleFunctionIamRole:
+        Value: !GetAtt GetUserFunction.Arn
+    GetUserFunctionIamRole:
         Description: "Implicit IAM Role created for Hello World function"
-        Value: !GetAtt GetPeopleFunctionRole.Arn
+        Value: !GetAtt GetUserFunctionRole.Arn

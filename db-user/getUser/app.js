@@ -1,7 +1,7 @@
 // const axios = require('axios')
 // const url = 'http://checkip.amazonaws.com/';
 const mongoose = require("mongoose");
-const People = require("./schema/people");
+const User = require("./schema/user");
 const Outlet = require("./schema/outlet");
 //const crypto = require("crypto");
 //const cors = require("cors");
@@ -48,16 +48,16 @@ mongoose.connection.on("error", function() {
 exports.lambdaHandler = async (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
     try {
-        const people = await People.find(
+        const user = await User.find(
             {},
             { name: 1, email: 1, pin: 1, phone: 1, role: 1 }
         )
             .populate("outlet")
             .exec();
-        //console.log("PEOPLE ", people);
+        //console.log("PEOPLE ", user);
         response = {
             statusCode: 200,
-            body: JSON.stringify(people),
+            body: JSON.stringify(user),
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Credentials": true

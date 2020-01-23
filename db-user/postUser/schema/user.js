@@ -1,14 +1,19 @@
 var mongoose = require("mongoose");
 
-var peopleSchema = mongoose.Schema(
+var userSchema = mongoose.Schema(
     {
-        //_id: mongoose.Schema.Types.ObjectId,
         name: {
             type: String,
             required: [true, "name 0"]
         },
+        userName: {
+            type: String,
+            unique: true,
+            required: [true, "userName 0"]
+        },
         email: {
             type: String,
+            unique: true,
             required: [true, "email 0"]
         },
         password: {
@@ -21,10 +26,12 @@ var peopleSchema = mongoose.Schema(
         },
         phone: {
             type: String,
+            unique: true,
             required: [true, "phone 0"]
         },
         role: {
             type: String,
+            enum: ["admin", "employee", "pic", "owner"],
             required: [true, "role 0"]
         },
         outlet: {
@@ -38,4 +45,4 @@ var peopleSchema = mongoose.Schema(
     }
 );
 
-module.exports = mongoose.model("People", peopleSchema);
+module.exports = mongoose.model("User", userSchema);

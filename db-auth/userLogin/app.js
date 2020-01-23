@@ -61,6 +61,8 @@ exports.lambdaHandler = async (event, context, callback) => {
             if (people.lenght != 0) {
                 const pass = bcrypt.compareSync(password, people[0].password);
             }
+            if (pass) {
+            }
 
             if (verified === true) {
                 console.log("sukses");
